@@ -106,6 +106,30 @@ public class BinaryControllerTest {
             .andExpect(model().attribute("operator", "+"));
     }
 
+    // Addition operation where first operand is null
+    @Test    
+    public void postAdd4() throws Exception {
+        this.mvc.perform(post("/").param("operand1", "").param("operator", "+").param("operand2", "101010"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("result"))
+            .andExpect(model().attribute("result", "101010"))
+            .andExpect(model().attribute("operand1", ""))
+            .andExpect(model().attribute("operand2", "101010"))
+            .andExpect(model().attribute("operator", "+"));
+    }
+
+    // Addition operation where both operands are null
+    @Test    
+    public void postAdd5() throws Exception {
+        this.mvc.perform(post("/").param("operand1", "").param("operator", "+").param("operand2", ""))
+            .andExpect(status().isOk())
+            .andExpect(view().name("result"))
+            .andExpect(model().attribute("result", "0"))
+            .andExpect(model().attribute("operand1", ""))
+            .andExpect(model().attribute("operand2", ""))
+            .andExpect(model().attribute("operator", "+"));
+    }
+
     // Bitwise OR operation where operands are the same length
     @Test
     public void postOr() throws Exception {
@@ -130,6 +154,30 @@ public class BinaryControllerTest {
             .andExpect(model().attribute("operator", "|"));
     }
 
+    // Bitwise OR operation where first operand is null
+    @Test
+    public void postOr3() throws Exception {
+        this.mvc.perform(post("/").param("operand1", "").param("operator", "|").param("operand2", "100100"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("result"))
+            .andExpect(model().attribute("result", "100100"))
+            .andExpect(model().attribute("operand1", ""))
+            .andExpect(model().attribute("operand2", "100100"))
+            .andExpect(model().attribute("operator", "|"));
+    }
+
+    // Bitwise OR operation where both operands are null
+    @Test
+    public void postOr4() throws Exception {
+        this.mvc.perform(post("/").param("operand1", "").param("operator", "|").param("operand2", ""))
+            .andExpect(status().isOk())
+            .andExpect(view().name("result"))
+            .andExpect(model().attribute("result", "0"))
+            .andExpect(model().attribute("operand1", ""))
+            .andExpect(model().attribute("operand2", ""))
+            .andExpect(model().attribute("operator", "|"));
+    }
+
     // Bitwise AND operation where operands are the same length
     @Test
     public void postAnd() throws Exception {
@@ -151,6 +199,30 @@ public class BinaryControllerTest {
             .andExpect(model().attribute("result", "11"))
             .andExpect(model().attribute("operand1", "1011"))
             .andExpect(model().attribute("operand2", "110011"))
+            .andExpect(model().attribute("operator", "&"));
+    }
+
+    // Bitwise AND operation where first operand is null
+    @Test
+    public void postAnd3() throws Exception {
+        this.mvc.perform(post("/").param("operand1", "").param("operator", "&").param("operand2", "110011"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("result"))
+            .andExpect(model().attribute("result", "0"))
+            .andExpect(model().attribute("operand1", ""))
+            .andExpect(model().attribute("operand2", "110011"))
+            .andExpect(model().attribute("operator", "&"));
+    }
+
+    // Bitwise AND operation where both operands are null
+    @Test
+    public void postAnd4() throws Exception {
+        this.mvc.perform(post("/").param("operand1", "").param("operator", "&").param("operand2", ""))
+            .andExpect(status().isOk())
+            .andExpect(view().name("result"))
+            .andExpect(model().attribute("result", "0"))
+            .andExpect(model().attribute("operand1", ""))
+            .andExpect(model().attribute("operand2", ""))
             .andExpect(model().attribute("operator", "&"));
     }
 
@@ -187,6 +259,30 @@ public class BinaryControllerTest {
             .andExpect(model().attribute("result", "100100000110"))
             .andExpect(model().attribute("operand1", "101010"))
             .andExpect(model().attribute("operand2", "110111"))
+            .andExpect(model().attribute("operator", "*"));
+    }
+
+    // Multiplication operation where first operand is null
+    @Test
+    public void postMultiply4() throws Exception {
+        this.mvc.perform(post("/").param("operand1", "").param("operator", "*").param("operand2", "110111"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("result"))
+            .andExpect(model().attribute("result", ""))
+            .andExpect(model().attribute("operand1", ""))
+            .andExpect(model().attribute("operand2", "110111"))
+            .andExpect(model().attribute("operator", "*"));
+    }
+
+    // Multiplication operation where both operands are null
+    @Test
+    public void postMultiply5() throws Exception {
+        this.mvc.perform(post("/").param("operand1", "").param("operator", "*").param("operand2", ""))
+            .andExpect(status().isOk())
+            .andExpect(view().name("result"))
+            .andExpect(model().attribute("result", ""))
+            .andExpect(model().attribute("operand1", ""))
+            .andExpect(model().attribute("operand2", ""))
             .andExpect(model().attribute("operator", "*"));
     }
 }
