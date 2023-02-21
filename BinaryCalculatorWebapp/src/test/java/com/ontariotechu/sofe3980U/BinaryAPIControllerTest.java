@@ -72,6 +72,14 @@ public class BinaryAPIControllerTest {
             .andExpect(content().string("0"));
     }
 
+    // To verify add endpoint and result of addition operation where second operand is 0
+    @Test
+    public void getAdd6() throws Exception {
+        this.mvc.perform(get("/add").param("operand1","101010").param("operand2","0"))
+            .andExpect(status().isOk())
+            .andExpect(content().string("101010"));
+    }
+
     // To verify or endpoint and result of bitwise OR operation where operands are the same length
     @Test
     public void getOr() throws Exception {
@@ -104,6 +112,14 @@ public class BinaryAPIControllerTest {
             .andExpect(content().string("0"));
     }
 
+    // To verify or endpoint and result of bitwise OR operation where second operand is zero
+    @Test
+    public void getOr5() throws Exception {
+        this.mvc.perform(get("/or").param("operand1", "110011").param("operand2", "0"))
+            .andExpect(status().isOk())
+            .andExpect(content().string("110011"));
+    }
+
     // To verify and endpoint and result of bitwise AND operation with the same length operands
     @Test
     public void getAnd() throws Exception {
@@ -132,6 +148,14 @@ public class BinaryAPIControllerTest {
     @Test
     public void getAnd4() throws Exception {
         this.mvc.perform(get("/and").param("operand1", "").param("operand2", ""))
+            .andExpect(status().isOk())
+            .andExpect(content().string("0"));
+    }
+
+    // To verify and endpoint and result of bitwise AND operation where second operand is zero
+    @Test
+    public void getAnd5() throws Exception {
+        this.mvc.perform(get("/and").param("operand1", "111010").param("operand2", "0"))
             .andExpect(status().isOk())
             .andExpect(content().string("0"));
     }
@@ -231,6 +255,16 @@ public class BinaryAPIControllerTest {
             .andExpect(jsonPath("$.operator").value("add"));
     }
 
+    // To verify add_json endpoint returns JSON response containing the correct output for addition operation where second operand is zero
+    @Test    
+    public void addJSON6() throws Exception {
+        this.mvc.perform(get("/add_json").param("operand1", "101010").param("operand2", "0"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.operand1").value("101010"))
+            .andExpect(jsonPath("$.result").value("101010"))
+            .andExpect(jsonPath("$.operator").value("add"));
+    }
+
     // To verify or_json endpoint returns JSON response containing the correct output for bitwise OR operation where both operands are same length
     @Test
     public void orJSON() throws Exception {
@@ -275,6 +309,16 @@ public class BinaryAPIControllerTest {
             .andExpect(jsonPath("$.operator").value("or"));
     }
     
+    // To verify or_json endpoint returns JSON response containing the correct output for bitwise OR operation where second operand is zero
+    @Test
+    public void orJSON5() throws Exception {
+        this.mvc.perform(get("/or_json").param("operand1", "110011").param("operand2", "0"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.operand1").value("110011"))
+            .andExpect(jsonPath("$.result").value("110011"))
+            .andExpect(jsonPath("$.operator").value("or"));
+    }
+
     // To verify and_json endpoint returns JSON response containing the correct output for bitwise AND operation where operands are same length
     @Test
     public void andJSON() throws Exception {
@@ -315,6 +359,16 @@ public class BinaryAPIControllerTest {
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.operand1").value(""))
             .andExpect(jsonPath("$.operand2").value(""))
+            .andExpect(jsonPath("$.result").value("0"))
+            .andExpect(jsonPath("$.operator").value("and"));
+    }
+
+    // To verify and_json endpoint returns JSON response containing the correct output for bitwise AND operation where second operand is zero
+    @Test
+    public void andJSON5() throws Exception {
+        this.mvc.perform(get("/and_json").param("operand1", "111010").param("operand2", "0"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.operand1").value("111010"))
             .andExpect(jsonPath("$.result").value("0"))
             .andExpect(jsonPath("$.operator").value("and"));
     }

@@ -130,6 +130,18 @@ public class BinaryControllerTest {
             .andExpect(model().attribute("operator", "+"));
     }
 
+    // Addition operation where second operand is zero
+    @Test    
+    public void postAdd6() throws Exception {
+        this.mvc.perform(post("/").param("operand1", "101010").param("operator", "+").param("operand2", "0"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("result"))
+            .andExpect(model().attribute("result", "101010"))
+            .andExpect(model().attribute("operand1", "101010"))
+            .andExpect(model().attribute("operand2", "0"))
+            .andExpect(model().attribute("operator", "+"));
+    }
+
     // Bitwise OR operation where operands are the same length
     @Test
     public void postOr() throws Exception {
@@ -178,6 +190,18 @@ public class BinaryControllerTest {
             .andExpect(model().attribute("operator", "|"));
     }
 
+    // Bitwise OR operation where second operand is zero
+    @Test
+    public void postOr5() throws Exception {
+        this.mvc.perform(post("/").param("operand1", "110011").param("operator", "|").param("operand2", "0"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("result"))
+            .andExpect(model().attribute("result", "110011"))
+            .andExpect(model().attribute("operand1", "110011"))
+            .andExpect(model().attribute("operand2", "0"))
+            .andExpect(model().attribute("operator", "|"));
+    }
+
     // Bitwise AND operation where operands are the same length
     @Test
     public void postAnd() throws Exception {
@@ -223,6 +247,18 @@ public class BinaryControllerTest {
             .andExpect(model().attribute("result", "0"))
             .andExpect(model().attribute("operand1", ""))
             .andExpect(model().attribute("operand2", ""))
+            .andExpect(model().attribute("operator", "&"));
+    }
+
+    // Bitwise AND operation where second operand is zero
+    @Test
+    public void postAnd5() throws Exception {
+        this.mvc.perform(post("/").param("operand1", "111010").param("operator", "&").param("operand2", "0"))
+            .andExpect(status().isOk())
+            .andExpect(view().name("result"))
+            .andExpect(model().attribute("result", "0"))
+            .andExpect(model().attribute("operand1", "111010"))
+            .andExpect(model().attribute("operand2", "0"))
             .andExpect(model().attribute("operator", "&"));
     }
 
