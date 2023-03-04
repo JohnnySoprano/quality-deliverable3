@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: java-app-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: java-app
+  template:
+    metadata:
+      labels:
+        app: java-app
+    spec:
+      containers:
+        - name: java-app
+          image: openjdk:11-jdk
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: production
+          volumeMounts:
+            - name: app
+              mountPath: /app
+      volumes:
+        - name: app
+          configMap:
+            name: app-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tomcat-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tomcat
+  template:
+    metadata:
+      labels:
+        app: tomcat
+    spec:
+      containers:
+        - name: tomcat
+          image: tomcat:9.0
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: webapps
+              mountPath: /usr/local/tomcat/webapps
+      volumes:
+        - name: webapps
+          configMap:
+            name: webapps-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tomcat-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 3306
+  selector:
+    app: tomcat
