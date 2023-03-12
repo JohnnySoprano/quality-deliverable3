@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: binary-calc-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: binary-calc
+  template:
+    metadata:
+      labels:
+        app: binary-calc
+    spec:
+      containers:
+        - image: gcr.io/symbolic-yen-379620/binarycalculator
+          name: binary-calc
+          ports:
+            - containerPort: 8080
+              name: binary-calc
